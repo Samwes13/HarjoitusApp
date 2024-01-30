@@ -46,7 +46,7 @@ export default function App() {
       <View style={{width: 12}}/>
         <Button title='-' onPress={kasitteleErotus}/>
       </View>
-      
+      <Text></Text>
       <Text>History:</Text>
 
       <FlatList style={styles.list} 
