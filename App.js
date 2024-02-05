@@ -1,71 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Calculator from './components/Calculator';
+import History from './components/History';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-
-  const[numero1, setNumero1] = useState('');
-  const[numero2, setNumero2] = useState('');
-  const[tulokset, setTulokset] = useState([]);
-  const [data, setData] = useState([]);
-
- 
-
-  const kasitteleSumma = () => {
-    const summa = parseFloat(numero1) + parseFloat(numero2);
-    const uusiTulos = { operation: numero1 + " + " + numero2, key:summa}; 
-    setData([...data, uusiTulos]);
-    setTulokset(summa);
-  }; 
-
-  const kasitteleErotus = () => {
-    const erotus = parseFloat(numero1) - parseFloat(numero2);
-    const uusiTulos = { operation: numero1 + " - " + numero2, key:erotus}; 
-    setData([...data, uusiTulos]);
-    setTulokset(erotus);
-  }; 
-    
-
   return (
-    <View style={styles.container}>
-      <Text></Text>
-      <Text>Result: {tulokset} </Text>
-      <TextInput
-          style={{width: 200, borderColor: 'gray', borderWidth: 1}}
-          keyboardType='number-pad'
-          onChangeText={text => setNumero1(text)}
-      /> 
-      <TextInput
-          style={{width: 200, borderColor: 'gray', borderWidth: 1}}
-          keyboardType='number-pad'
-          onChangeText={text => setNumero2(text)}
-      />
-      <View style={{flexDirection: 'row',
-            alignItems: 'center'}}>    
-        <Button title='+' onPress={kasitteleSumma}/>
-      <View style={{width: 12}}/>
-        <Button title='-' onPress={kasitteleErotus}/>
-      </View>
-      <Text></Text>
-      <Text>History:</Text>
-
-      <FlatList style={styles.list} 
-      data={data} 
-      renderItem={({item}) => <Text>{item.operation} = {item.key}</Text>}
-        keyExtractor={(item, index) => index.toString()} />
-
-      
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Calculator" component={Calculator} />
+        <Stack.Screen name="History" component={History} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 56,
-  },
-});
+};
